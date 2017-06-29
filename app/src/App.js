@@ -19,14 +19,16 @@ class App extends Component {
     }
 
     render() {
-        let todos = this.state.todoList.map((item, index) => {
+        let todos = this.state.todoList.filter((item)=>!item.deleted).map((item,index)=>{
             return (
                 <li key={index}>
-                    <TodoItem todo={item} onToggle={this.toggle.bind(this)}
+                    <TodoItem todo={item}
+                              onToggle={this.toggle.bind(this)}
                               onDelete={this.delete.bind(this)}/>
                 </li>
             )
         })
+
         return (
             <div className="App">
                 <h1>我的代办</h1>
@@ -41,14 +43,12 @@ class App extends Component {
             </div>
         )
     }
-
-    delete(event, todo){
+   delete(event, todo){
         todo.deleted = true
-        this.setState(this.state)
+            this.setState(this.state)
     }
-
     toggle(e,todo){
-        todo.statues = todo.statues ==='completed'?'':'cpmpleted'
+        todo.status = todo.status === 'completed' ? '' : 'completed'
         this.setState(this.state)
     }
     changeTitle(event){
